@@ -1,0 +1,840 @@
+@import "tailwindcss";
+
+/*
+ * Accent theming
+ * -------------
+ * `--accent` and its derived shades are injected server-side on <html> by
+ * app/layout.tsx from the shop's Settings value. The declarations below are
+ * only a pre-hydration fallback so the first paint is never unstyled.
+ */
+:root {
+  --accent: #C5A059;
+  --accent-strong: color-mix(in srgb, var(--accent) 82%, #000000);
+  --accent-soft: color-mix(in srgb, var(--accent) 22%, #ffffff);
+  --accent-softer: color-mix(in srgb, var(--accent) 10%, #ffffff);
+  --accent-wash: color-mix(in srgb, var(--accent) 12%, #ffffff);
+  --accent-on: #ffffff;
+
+  --primary: var(--accent);
+  --secondary: var(--accent);
+  --tertiary: #9e8e7a;
+}
+
+/* Keep gold actions and highlights solid instead of using gold gradients. */
+:where(
+  [class*="from-[var(--accent)]"],
+  [class*="via-[var(--accent)]"],
+  [class*="via-[#D4AF37]"]
+) {
+  background-image: none !important;
+  background-color: #D4AF37 !important;
+  color: #0C0C0E !important;
+}
+
+body {
+  font-family: var(--font-poppins), system-ui, -apple-system, "Segoe UI", sans-serif;
+  background-color: #F7F7F8;
+  color: #171717;
+}
+
+/*
+ * Shop POS & Store: Premium champagne-gold and crisp light luxury theme.
+ * All dashboard areas, sidebars, panels, cards, and modal dialogs use
+ * high-contrast, clean light surfaces with gold accents.
+ */
+.pos-dashboard {
+  background-color: #F7F7F8 !important;
+  color: #171717 !important;
+}
+
+#pos-main {
+  background-color: #F7F7F8 !important;
+  color: #171717 !important;
+}
+
+/* =====================================================================
+   POS Left Sidebar (Themed with Chosen Accent Color)
+   - Background dynamically reflects the selected accent color.
+   - Text & icons are WHITE at all times for unselected items and top header.
+   - Active / selected option button has WHITE background and BLACK text.
+   ===================================================================== */
+aside.pos-sidebar,
+.pos-dashboard aside.pos-sidebar {
+  background-color: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+/* ALL sidebar unselected content (header, titles, subtitles, unselected buttons) is PURE WHITE */
+aside.pos-sidebar .sidebar-brand-name,
+aside.pos-sidebar .sidebar-brand-tagline,
+aside.pos-sidebar .sidebar-admin-badge,
+aside.pos-sidebar .sidebar-title,
+aside.pos-sidebar .sidebar-subtitle,
+.pos-dashboard aside.pos-sidebar .sidebar-brand-name,
+.pos-dashboard aside.pos-sidebar .sidebar-brand-tagline,
+.pos-dashboard aside.pos-sidebar .sidebar-admin-badge,
+.pos-dashboard aside.pos-sidebar .sidebar-title,
+.pos-dashboard aside.pos-sidebar .sidebar-subtitle,
+aside.pos-sidebar header,
+aside.pos-sidebar header *,
+aside.pos-sidebar footer,
+aside.pos-sidebar footer *,
+aside.pos-sidebar .sidebar-admin-footer,
+aside.pos-sidebar .sidebar-admin-footer *,
+.pos-dashboard aside.pos-sidebar footer,
+.pos-dashboard aside.pos-sidebar footer *,
+.pos-dashboard aside.pos-sidebar .sidebar-admin-footer,
+.pos-dashboard aside.pos-sidebar .sidebar-admin-footer *,
+aside.pos-sidebar button:not([data-active="true"]),
+aside.pos-sidebar button:not([data-active="true"]) *,
+.pos-dashboard aside.pos-sidebar button:not([data-active="true"]),
+.pos-dashboard aside.pos-sidebar button:not([data-active="true"]) * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Active / Selected option in left sidebar: White background, PURE BLACK text & icon */
+aside.pos-sidebar button[data-active="true"],
+.pos-dashboard aside.pos-sidebar button[data-active="true"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+aside.pos-sidebar button[data-active="true"] *,
+aside.pos-sidebar button[data-active="true"] span:not(.badge-count),
+aside.pos-sidebar button[data-active="true"] .sidebar-tab-label,
+.pos-dashboard aside.pos-sidebar button[data-active="true"] *,
+.pos-dashboard aside.pos-sidebar button[data-active="true"] span:not(.badge-count),
+.pos-dashboard aside.pos-sidebar button[data-active="true"] .sidebar-tab-label {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background-color: transparent !important;
+}
+
+aside.pos-sidebar button[data-active="true"] svg,
+.pos-dashboard aside.pos-sidebar button[data-active="true"] svg {
+  color: #000000 !important;
+  stroke: #000000 !important;
+  background-color: transparent !important;
+}
+
+/* Red / Amber notification badges inside active/inactive buttons */
+.pos-dashboard aside.pos-sidebar button span.bg-\[\#DC2626\],
+.pos-dashboard aside.pos-sidebar button span[class*="bg-red-"] {
+  background-color: #DC2626 !important;
+  color: #ffffff !important;
+}
+.pos-dashboard aside.pos-sidebar button span.bg-\[\#D97706\],
+.pos-dashboard aside.pos-sidebar button span[class*="bg-amber-"] {
+  background-color: #D97706 !important;
+  color: #ffffff !important;
+}
+
+/* Scrollbar styling for sidebar nav */
+.pos-sidebar-nav {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+.pos-sidebar-nav::-webkit-scrollbar {
+  width: 5px;
+}
+.pos-sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+.pos-sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+}
+.pos-sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Move Next dev badge to bottom-right so it never covers the sidebar footer */
+nextjs-portal,
+[data-nextjs-toast-wrapper],
+[data-nextjs-dev-indicator] {
+  left: auto !important;
+  right: 16px !important;
+}
+
+/* Headings */
+.pos-dashboard h1,
+.pos-dashboard h2,
+.pos-dashboard h3,
+.pos-dashboard h4,
+#pos-main h1,
+#pos-main h2,
+#pos-main h3,
+#pos-main h4 {
+  color: #171717 !important;
+}
+
+/* Cards & Surfaces across all screens and modal dialogs */
+.pos-dashboard [class*="bg-[#0A0A0C]"],
+.pos-dashboard [class*="bg-[#0A0A0D]"],
+.pos-dashboard [class*="bg-[#0C0C0E]"],
+.pos-dashboard [class*="bg-[#08080A]"],
+.pos-dashboard [class*="bg-[#09090B]"],
+.pos-dashboard [class*="bg-[#101015]"],
+.pos-dashboard [class*="bg-[#111114]"],
+.pos-dashboard [class*="bg-[#131317]"],
+.pos-dashboard [class*="bg-[#131316]"],
+.pos-dashboard [class*="bg-[#141417]"],
+.pos-dashboard [class*="bg-[#16161D]"],
+.pos-dashboard [class*="bg-[#181820]"],
+.pos-dashboard [class*="bg-[#18181D]"],
+.pos-dashboard [class*="bg-[#1A1A1F]"],
+.pos-dashboard [class*="bg-[#1A1A24]"],
+.pos-dashboard [class*="bg-[#1E1E24]"],
+.pos-dashboard [class*="bg-[#1E1E26]"],
+.pos-dashboard [class*="bg-[#1F1F24]"],
+.pos-dashboard [class*="bg-[#1F1F28]"],
+.pos-dashboard [class*="bg-[#202028]"],
+.pos-dashboard [class*="bg-[#20202A]"],
+.pos-dashboard [class*="bg-[#22222D]"],
+.pos-dashboard [class*="bg-[#22222E]"],
+.pos-dashboard [class*="bg-[#25221B]"],
+.pos-dashboard [class*="bg-[#252530]"],
+.pos-dashboard [class*="bg-[#252532]"],
+#pos-main [class*="bg-[#0A0A0C]"],
+#pos-main [class*="bg-[#0A0A0D]"],
+#pos-main [class*="bg-[#08080A]"],
+#pos-main [class*="bg-[#09090B]"],
+#pos-main [class*="bg-[#101015]"],
+#pos-main [class*="bg-[#131317]"],
+#pos-main [class*="bg-[#131316]"],
+#pos-main [class*="bg-[#16161D]"],
+#pos-main [class*="bg-[#181820]"],
+#pos-main [class*="bg-[#18181D]"],
+#pos-main [class*="bg-[#1E1E24]"],
+#pos-main [class*="bg-[#1E1E26]"],
+#pos-main [class*="bg-[#1F1F28]"],
+#pos-main [class*="bg-[#202028]"],
+#pos-main [class*="bg-[#20202A]"],
+#pos-main [class*="bg-[#22222D]"],
+#pos-main [class*="bg-[#25221B]"],
+#pos-main [class*="bg-[#252530]"],
+#pos-main [class*="bg-[#252532]"],
+#pos-main [class~="bg-white"],
+#pos-main [class~="bg-[#FFFFFF]"],
+#pos-main [class~="bg-[#FAFAFA]"],
+#pos-main [class~="bg-zinc-50"],
+#pos-main [class~="bg-gray-50"] {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  border-color: rgba(197, 160, 89, 0.3) !important;
+}
+
+/* Semi-transparent dark backdrops for modals (keep dark overlay for focus) */
+[class*="fixed"][class*="inset-0"][class*="bg-black"],
+.pos-dashboard [class*="fixed"][class*="inset-0"][class*="bg-black"] {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Modal Dialog containers */
+.pos-dashboard [class*="rounded-2xl"][class*="shadow-2xl"],
+.pos-dashboard [class*="rounded-2xl"][class*="shadow-[0_20px_60px"],
+.pos-dashboard [class*="rounded-2xl"][class*="border-[#C5A059]"],
+#pos-main [class*="rounded-2xl"][class*="shadow-2xl"] {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  border-color: rgba(197, 160, 89, 0.35) !important;
+  box-shadow: 0 20px 45px rgba(23, 23, 23, 0.12) !important;
+}
+
+/* Order Details Modal: all text, labels, headers, and amounts must be pure black */
+.order-details-modal,
+.order-details-modal *,
+.pos-dashboard .order-details-modal,
+.pos-dashboard .order-details-modal * {
+  color: #000000 !important;
+}
+
+/* All analytics chart & progress bars: always pure black */
+.chart-bar-black,
+.pos-dashboard .chart-bar-black,
+#pos-main .chart-bar-black {
+  background-color: #000000 !important;
+  background-image: none !important;
+}
+
+/* Form Inputs, Selects, and Textareas */
+.pos-dashboard input:not([type="checkbox"]):not([type="radio"]),
+.pos-dashboard select,
+.pos-dashboard textarea,
+#pos-main input:not([type="checkbox"]):not([type="radio"]),
+#pos-main select,
+#pos-main textarea {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  border-color: #d1d5db !important;
+  box-shadow: none !important;
+}
+
+.pos-dashboard input:focus:not([type="checkbox"]):not([type="radio"]),
+.pos-dashboard select:focus,
+.pos-dashboard textarea:focus,
+#pos-main input:focus:not([type="checkbox"]):not([type="radio"]),
+#pos-main select:focus,
+#pos-main textarea:focus {
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2) !important;
+  outline: none !important;
+}
+
+.pos-dashboard input::placeholder,
+.pos-dashboard textarea::placeholder,
+#pos-main input::placeholder,
+#pos-main textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+.pos-dashboard select option,
+#pos-main select option {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+}
+
+/* ==========================================================================
+   Light theme text contrast rules:
+   Whenever a text has a white/light background, make sure text color is black.
+   ========================================================================== */
+
+/* Universal baseline for light / white containers */
+.bg-white,
+[class*="bg-white"],
+[class*="bg-[#FFFFFF]"],
+[class*="bg-[#ffffff]"],
+[class*="bg-[#FAFAFA]"],
+[class*="bg-[#FAF8F5]"],
+[class*="bg-[#FAF7F2]"],
+[class*="bg-[#F7F7F8]"],
+[class*="bg-zinc-50"],
+[class*="bg-gray-50"],
+.pos-dashboard,
+#pos-main {
+  color: #171717;
+}
+
+/* Any white or light text classes on light surfaces MUST turn black (#171717) */
+.pos-dashboard .text-white,
+.pos-dashboard [class*="text-white"],
+.pos-dashboard [class*="text-[#FAF7F2]"],
+.pos-dashboard [class*="text-[#FAF8F5]"],
+.pos-dashboard [class*="text-[#FAF5EE]"],
+.pos-dashboard [class*="text-[#FFFFFF]"],
+.pos-dashboard [class*="text-[#ffffff]"],
+.pos-dashboard [class*="text-zinc-100"],
+.pos-dashboard [class*="text-zinc-200"],
+.pos-dashboard [class*="text-gray-100"],
+.pos-dashboard [class*="text-gray-200"],
+.pos-dashboard [class*="text-slate-100"],
+.pos-dashboard [class*="text-slate-200"],
+#pos-main .text-white,
+#pos-main [class*="text-white"],
+#pos-main [class*="text-[#FAF7F2]"],
+#pos-main [class*="text-[#FAF8F5]"],
+#pos-main [class*="text-[#FAF5EE]"],
+#pos-main [class*="text-[#FFFFFF]"],
+#pos-main [class*="text-[#ffffff]"],
+#pos-main [class*="text-zinc-100"],
+#pos-main [class*="text-zinc-200"],
+#pos-main [class*="text-gray-100"],
+#pos-main [class*="text-gray-200"],
+#pos-main [class*="text-slate-100"],
+#pos-main [class*="text-slate-200"],
+[class*="bg-white"] .text-white,
+[class*="bg-white"] [class*="text-white"],
+[class*="bg-white"] [class*="text-[#FAF7F2]"],
+[class*="bg-[#FFFFFF]"] .text-white,
+[class*="bg-[#FFFFFF]"] [class*="text-white"],
+[class*="bg-[#FFFFFF]"] [class*="text-[#FAF7F2]"],
+[class*="bg-[#FAF8F5]"] .text-white,
+[class*="bg-[#FAF8F5]"] [class*="text-white"],
+[class*="bg-[#FAF8F5]"] [class*="text-[#FAF7F2]"] {
+  color: #171717 !important;
+}
+
+/* Secondary / muted text on white backgrounds becomes a crisp dark slate #4b5563 */
+.pos-dashboard [class*="text-[#FAF7F2]/"],
+.pos-dashboard [class*="text-[#B8B5AE]"],
+.pos-dashboard [class*="text-[#E8E2D8]"],
+#pos-main [class*="text-[#FAF7F2]/"],
+#pos-main [class*="text-[#B8B5AE]"],
+#pos-main [class*="text-[#E8E2D8]"],
+[class*="bg-white"] [class*="text-[#B8B5AE]"],
+[class*="bg-[#FFFFFF]"] [class*="text-[#B8B5AE]"],
+[class*="bg-[#FAF8F5]"] [class*="text-[#B8B5AE]"] {
+  color: #4b5563 !important;
+}
+
+/* Explicit text-black utility */
+.text-black,
+[class*="text-black"] {
+  color: #000000 !important;
+}
+
+/* Form inputs & dropdown options */
+.pos-dashboard select option,
+#pos-main select option,
+select option {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+}
+
+.pos-dashboard .text-gray-600,
+.pos-dashboard .text-gray-500,
+.pos-dashboard .text-zinc-600,
+.pos-dashboard .text-zinc-500,
+.pos-dashboard .text-slate-600,
+.pos-dashboard .text-slate-500,
+.pos-dashboard .text-neutral-600,
+.pos-dashboard .text-neutral-500,
+#pos-main .text-gray-600,
+#pos-main .text-gray-500,
+#pos-main .text-zinc-600,
+#pos-main .text-zinc-500,
+#pos-main .text-slate-600,
+#pos-main .text-slate-500,
+#pos-main .text-neutral-600,
+#pos-main .text-neutral-500 {
+  color: #4b5563 !important;
+}
+
+/* Tables */
+.pos-dashboard thead tr,
+.pos-dashboard thead th,
+#pos-main thead tr,
+#pos-main thead th {
+  background-color: #f9fafb !important;
+  color: #171717 !important;
+  border-color: #e5e7eb !important;
+}
+
+.pos-dashboard td,
+#pos-main td,
+.pos-dashboard table td p,
+#pos-main table td p,
+.pos-dashboard table td span:not([class*="bg-"]),
+#pos-main table td span:not([class*="bg-"]) {
+  color: #171717 !important;
+  border-color: #e5e7eb !important;
+}
+
+.pos-dashboard tbody tr:hover,
+#pos-main tbody tr:hover {
+  background-color: #faf8f2 !important;
+}
+
+/* Solid colored action buttons (never match semi-transparent backdrops like bg-black/60) */
+.pos-dashboard [class*="bg-[var(--accent)]"],
+.pos-dashboard [class*="bg-[var(--accent)]"] *,
+.pos-dashboard [class*="from-[var(--accent)]"],
+.pos-dashboard [class*="from-[var(--accent)]"] *,
+#pos-main [class*="bg-[var(--accent)]"],
+#pos-main [class*="bg-[var(--accent)]"] *,
+#pos-main [class*="from-[var(--accent)]"],
+#pos-main [class*="from-[var(--accent)]"] * {
+  color: #0C0C0E !important;
+}
+
+.pos-dashboard button[class~="bg-red-600"],
+.pos-dashboard button[class~="bg-red-700"],
+.pos-dashboard button[class~="bg-[#DC2626]"],
+.pos-dashboard button[class~="bg-emerald-600"],
+.pos-dashboard button[class~="bg-emerald-700"],
+.pos-dashboard button[class~="bg-[#16A34A]"],
+.pos-dashboard button[class~="bg-green-600"],
+.pos-dashboard button[class~="bg-green-700"],
+.pos-dashboard button[class~="bg-blue-600"],
+.pos-dashboard button[class~="bg-blue-700"],
+.pos-dashboard button[class~="bg-[#2563EB]"],
+.pos-dashboard a[class~="bg-red-600"],
+.pos-dashboard a[class~="bg-red-700"],
+.pos-dashboard a[class~="bg-emerald-600"],
+.pos-dashboard a[class~="bg-[#16A34A]"],
+.pos-dashboard a[class~="bg-green-600"],
+.pos-dashboard a[class~="bg-blue-600"],
+.pos-dashboard a[class~="bg-[#2563EB]"],
+#pos-main button[class~="bg-red-600"],
+#pos-main button[class~="bg-red-700"],
+#pos-main button[class~="bg-[#DC2626]"],
+#pos-main button[class~="bg-emerald-600"],
+#pos-main button[class~="bg-emerald-700"],
+#pos-main button[class~="bg-[#16A34A]"],
+#pos-main button[class~="bg-green-600"],
+#pos-main button[class~="bg-green-700"],
+#pos-main button[class~="bg-blue-600"],
+#pos-main button[class~="bg-blue-700"],
+#pos-main button[class~="bg-[#2563EB]"],
+#pos-main a[class~="bg-red-600"],
+#pos-main a[class~="bg-red-700"],
+#pos-main a[class~="bg-emerald-600"],
+#pos-main a[class~="bg-[#16A34A]"],
+#pos-main a[class~="bg-green-600"],
+#pos-main a[class~="bg-blue-600"],
+#pos-main a[class~="bg-[#2563EB]"],
+button[class~="bg-zinc-900"],
+button[class~="bg-zinc-800"],
+button[class~="bg-black"],
+a[class~="bg-black"],
+.pos-dashboard button[class~="bg-red-600"] *,
+.pos-dashboard button[class~="bg-red-700"] *,
+.pos-dashboard button[class~="bg-[#DC2626]"] *,
+.pos-dashboard button[class~="bg-emerald-600"] *,
+.pos-dashboard button[class~="bg-emerald-700"] *,
+.pos-dashboard button[class~="bg-[#16A34A]"] *,
+.pos-dashboard button[class~="bg-green-600"] *,
+.pos-dashboard button[class~="bg-green-700"] *,
+.pos-dashboard button[class~="bg-blue-600"] *,
+.pos-dashboard button[class~="bg-blue-700"] *,
+.pos-dashboard button[class~="bg-[#2563EB]"] *,
+.pos-dashboard a[class~="bg-red-600"] *,
+.pos-dashboard a[class~="bg-red-700"] *,
+.pos-dashboard a[class~="bg-emerald-600"] *,
+.pos-dashboard a[class~="bg-[#16A34A]"] *,
+.pos-dashboard a[class~="bg-green-600"] *,
+.pos-dashboard a[class~="bg-blue-600"] *,
+.pos-dashboard a[class~="bg-[#2563EB]"] *,
+#pos-main button[class~="bg-red-600"] *,
+#pos-main button[class~="bg-red-700"] *,
+#pos-main button[class~="bg-[#DC2626]"] *,
+#pos-main button[class~="bg-emerald-600"] *,
+#pos-main button[class~="bg-emerald-700"] *,
+#pos-main button[class~="bg-[#16A34A]"] *,
+#pos-main button[class~="bg-green-600"] *,
+#pos-main button[class~="bg-green-700"] *,
+#pos-main button[class~="bg-blue-600"] *,
+#pos-main button[class~="bg-blue-700"] *,
+#pos-main button[class~="bg-[#2563EB]"] *,
+#pos-main a[class~="bg-red-600"] *,
+#pos-main a[class~="bg-red-700"] *,
+#pos-main a[class~="bg-emerald-600"] *,
+#pos-main a[class~="bg-[#16A34A]"] *,
+#pos-main a[class~="bg-green-600"] *,
+#pos-main a[class~="bg-blue-600"] *,
+#pos-main a[class~="bg-[#2563EB]"] *,
+button[class~="bg-zinc-900"] *,
+button[class~="bg-zinc-800"] *,
+button[class~="bg-black"] *,
+a[class~="bg-black"] * {
+  color: #ffffff !important;
+}
+
+/* Also ensure hover states turn text white when hover brings a saturated dark background */
+.pos-dashboard button:hover[class*="hover:bg-[#DC2626]"],
+.pos-dashboard button:hover[class*="hover:bg-[#DC2626]"] *,
+.pos-dashboard button:hover[class*="hover:bg-red-600"],
+.pos-dashboard button:hover[class*="hover:bg-red-600"] *,
+#pos-main button:hover[class*="hover:bg-[#DC2626]"],
+#pos-main button:hover[class*="hover:bg-[#DC2626]"] *,
+#pos-main button:hover[class*="hover:bg-red-600"],
+#pos-main button:hover[class*="hover:bg-red-600"] * {
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   GREY AND LIGHT BACKGROUNDS: ALL TEXT AND ICONS MUST BE BLACK (#171717)
+   Whenever a grey background (zinc, gray, slate, neutral, stone, subtle tints)
+   is used, text, labels, headings, buttons, and icons MUST be black (#171717).
+   ========================================================================== */
+[class*="bg-zinc-50"],
+[class*="bg-zinc-100"],
+[class*="bg-zinc-200"],
+[class*="bg-zinc-300"],
+[class*="bg-zinc-400"],
+[class*="bg-gray-50"],
+[class*="bg-gray-100"],
+[class*="bg-gray-200"],
+[class*="bg-gray-300"],
+[class*="bg-gray-400"],
+[class*="bg-slate-50"],
+[class*="bg-slate-100"],
+[class*="bg-slate-200"],
+[class*="bg-slate-300"],
+[class*="bg-slate-400"],
+[class*="bg-neutral-50"],
+[class*="bg-neutral-100"],
+[class*="bg-neutral-200"],
+[class*="bg-neutral-300"],
+[class*="bg-stone-50"],
+[class*="bg-stone-100"],
+[class*="bg-stone-200"],
+[class*="bg-stone-300"],
+[class*="bg-black/5"],
+[class*="bg-black/10"],
+[class*="bg-black/15"],
+[class*="bg-black/20"],
+[class*="bg-white/5"],
+[class*="bg-white/10"],
+[class*="bg-white/15"],
+[class*="bg-white/20"],
+[class*="bg-white/30"],
+[class*="bg-white/40"],
+[class*="bg-white/50"],
+[class*="bg-white/60"],
+[class*="bg-white/70"],
+[class*="bg-white/80"],
+[class*="bg-white/90"],
+[class*="bg-[#FAF8F5]"],
+[class*="bg-[#FAF7F2]"],
+[class*="bg-[#FAFAFA]"],
+[class*="bg-[#F7F7F8]"],
+[class*="bg-[#F5F2EB]"],
+[class*="bg-[#FAF5EE]"],
+[class*="bg-[#F3F4F6]"],
+[class*="bg-[#E5E7EB]"],
+[class*="bg-[#F9FAFB]"] {
+  color: #171717 !important;
+}
+
+/* Ensure text inside grey elements (labels, buttons, spans, headings, paragraphs, icons) is black */
+[class*="bg-zinc-50"] p, [class*="bg-zinc-50"] span:not([class*="bg-"]):not([class*="text-emerald-"]):not([class*="text-red-"]):not([class*="text-blue-"]):not([class*="text-amber-"]):not([class*="text-[var(--accent)]"]), [class*="bg-zinc-50"] label, [class*="bg-zinc-50"] h1, [class*="bg-zinc-50"] h2, [class*="bg-zinc-50"] h3, [class*="bg-zinc-50"] h4,
+[class*="bg-zinc-100"] p, [class*="bg-zinc-100"] span:not([class*="bg-"]):not([class*="text-emerald-"]):not([class*="text-red-"]):not([class*="text-blue-"]):not([class*="text-amber-"]):not([class*="text-[var(--accent)]"]), [class*="bg-zinc-100"] label, [class*="bg-zinc-100"] h1, [class*="bg-zinc-100"] h2, [class*="bg-zinc-100"] h3, [class*="bg-zinc-100"] h4,
+[class*="bg-zinc-200"] p, [class*="bg-zinc-200"] span:not([class*="bg-"]):not([class*="text-emerald-"]):not([class*="text-red-"]):not([class*="text-blue-"]):not([class*="text-amber-"]):not([class*="text-[var(--accent)]"]), [class*="bg-zinc-200"] label, [class*="bg-zinc-200"] h1, [class*="bg-zinc-200"] h2, [class*="bg-zinc-200"] h3, [class*="bg-zinc-200"] h4,
+[class*="bg-gray-50"] p, [class*="bg-gray-50"] span:not([class*="bg-"]):not([class*="text-emerald-"]):not([class*="text-red-"]):not([class*="text-blue-"]):not([class*="text-amber-"]):not([class*="text-[var(--accent)]"]), [class*="bg-gray-50"] label,
+[class*="bg-gray-100"] p, [class*="bg-gray-100"] span:not([class*="bg-"]):not([class*="text-emerald-"]):not([class*="text-red-"]):not([class*="text-blue-"]):not([class*="text-amber-"]):not([class*="text-[var(--accent)]"]), [class*="bg-gray-100"] label,
+[class*="bg-gray-200"] p, [class*="bg-gray-200"] span:not([class*="bg-"]):not([class*="text-emerald-"]):not([class*="text-red-"]):not([class*="text-blue-"]):not([class*="text-amber-"]):not([class*="text-[var(--accent)]"]), [class*="bg-gray-200"] label,
+[class*="bg-slate-50"] p, [class*="bg-slate-50"] label,
+[class*="bg-slate-100"] p, [class*="bg-slate-100"] label,
+[class*="bg-slate-200"] p, [class*="bg-slate-200"] label,
+[class*="bg-neutral-50"] p, [class*="bg-neutral-50"] label,
+[class*="bg-neutral-100"] p, [class*="bg-neutral-100"] label,
+[class*="bg-neutral-200"] p, [class*="bg-neutral-200"] label,
+[class*="bg-white/5"] p, [class*="bg-white/5"] label,
+[class*="bg-white/10"] p, [class*="bg-white/10"] label,
+[class*="bg-black/5"] p, [class*="bg-black/5"] label,
+[class*="bg-black/10"] p, [class*="bg-black/10"] label {
+  color: #171717 !important;
+}
+
+/* Ensure SVG icons inside grey/light elements inherit dark color */
+[class*="bg-zinc-50"] svg,
+[class*="bg-zinc-100"] svg,
+[class*="bg-zinc-200"] svg,
+[class*="bg-gray-50"] svg,
+[class*="bg-gray-100"] svg,
+[class*="bg-gray-200"] svg,
+[class*="bg-slate-50"] svg,
+[class*="bg-slate-100"] svg,
+[class*="bg-slate-200"] svg,
+[class*="bg-neutral-50"] svg,
+[class*="bg-neutral-100"] svg,
+[class*="bg-neutral-200"] svg,
+[class*="bg-white/5"] svg,
+[class*="bg-white/10"] svg,
+[class*="bg-black/5"] svg,
+[class*="bg-black/10"] svg {
+  color: #171717 !important;
+}
+
+/* Any white text classes on grey backgrounds MUST turn black */
+[class*="bg-zinc-"] .text-white,
+[class*="bg-zinc-"] [class*="text-white"],
+[class*="bg-zinc-"] [class*="text-[#FAF7F2]"],
+[class*="bg-zinc-"] [class*="text-[#FAF8F5]"],
+[class*="bg-zinc-"] [class*="text-[#FFFFFF]"],
+[class*="bg-zinc-"] [class*="text-[#ffffff]"],
+[class*="bg-gray-"] .text-white,
+[class*="bg-gray-"] [class*="text-white"],
+[class*="bg-gray-"] [class*="text-[#FAF7F2]"],
+[class*="bg-gray-"] [class*="text-[#FAF8F5]"],
+[class*="bg-slate-"] .text-white,
+[class*="bg-slate-"] [class*="text-white"],
+[class*="bg-slate-"] [class*="text-[#FAF7F2]"],
+[class*="bg-neutral-"] .text-white,
+[class*="bg-neutral-"] [class*="text-white"],
+[class*="bg-neutral-"] [class*="text-[#FAF7F2]"],
+[class*="bg-black/5"] .text-white,
+[class*="bg-black/5"] [class*="text-white"],
+[class*="bg-black/10"] .text-white,
+[class*="bg-black/10"] [class*="text-white"],
+[class*="bg-white/5"] .text-white,
+[class*="bg-white/5"] [class*="text-white"],
+[class*="bg-white/10"] .text-white,
+[class*="bg-white/10"] [class*="text-white"] {
+  color: #171717 !important;
+}
+
+/* Muted text on grey backgrounds must be crisp dark slate #4b5563, never light grey/white */
+[class*="bg-zinc-"] [class*="text-[#B8B5AE]"],
+[class*="bg-gray-"] [class*="text-[#B8B5AE]"],
+[class*="bg-slate-"] [class*="text-[#B8B5AE]"],
+[class*="bg-neutral-"] [class*="text-[#B8B5AE]"],
+[class*="bg-black/5"] [class*="text-[#B8B5AE]"],
+[class*="bg-black/10"] [class*="text-[#B8B5AE]"],
+[class*="bg-white/5"] [class*="text-[#B8B5AE]"],
+[class*="bg-white/10"] [class*="text-[#B8B5AE]"],
+[class*="bg-zinc-"] [class*="text-[#E8E2D8]"],
+[class*="bg-gray-"] [class*="text-[#E8E2D8]"],
+[class*="bg-slate-"] [class*="text-[#E8E2D8]"],
+[class*="bg-white/5"] [class*="text-[#E8E2D8]"] {
+  color: #4b5563 !important;
+}
+
+/* In all modal dialogs, ensure headings, titles, subtitles, and labels are black */
+.pos-dashboard [class*="fixed"] [class*="bg-white"] h1,
+.pos-dashboard [class*="fixed"] [class*="bg-white"] h2,
+.pos-dashboard [class*="fixed"] [class*="bg-white"] h3,
+.pos-dashboard [class*="fixed"] [class*="bg-white"] h4,
+.pos-dashboard [class*="fixed"] [class*="bg-[#FAF8F5]"] h1,
+.pos-dashboard [class*="fixed"] [class*="bg-[#FAF8F5]"] h2,
+.pos-dashboard [class*="fixed"] [class*="bg-[#FAF8F5]"] h3,
+.pos-dashboard [class*="fixed"] [class*="bg-[#FAF8F5]"] h4,
+.pos-dashboard [class*="fixed"] [class*="bg-[#FAF8F5]"] p,
+.pos-dashboard [class*="fixed"] [class*="bg-white"] label,
+#pos-main [class*="fixed"] [class*="bg-white"] h1,
+#pos-main [class*="fixed"] [class*="bg-white"] h2,
+#pos-main [class*="fixed"] [class*="bg-white"] h3,
+#pos-main [class*="fixed"] [class*="bg-white"] h4,
+#pos-main [class*="fixed"] [class*="bg-[#FAF8F5]"] h1,
+#pos-main [class*="fixed"] [class*="bg-[#FAF8F5]"] h2,
+#pos-main [class*="fixed"] [class*="bg-[#FAF8F5]"] h3,
+#pos-main [class*="fixed"] [class*="bg-[#FAF8F5]"] h4,
+#pos-main [class*="fixed"] [class*="bg-[#FAF8F5]"] p,
+#pos-main [class*="fixed"] [class*="bg-white"] label {
+  color: #171717 !important;
+}
+
+.pos-dashboard [class*="fixed"] [class*="bg-white"] .text-zinc-500,
+.pos-dashboard [class*="fixed"] [class*="bg-white"] .text-zinc-600,
+.pos-dashboard [class*="fixed"] [class*="bg-[#FAF8F5]"] .text-zinc-500,
+.pos-dashboard [class*="fixed"] [class*="bg-[#FAF8F5]"] .text-zinc-600,
+#pos-main [class*="fixed"] [class*="bg-white"] .text-zinc-500,
+#pos-main [class*="fixed"] [class*="bg-white"] .text-zinc-600,
+#pos-main [class*="fixed"] [class*="bg-[#FAF8F5]"] .text-zinc-500,
+#pos-main [class*="fixed"] [class*="bg-[#FAF8F5]"] .text-zinc-600 {
+  color: #4b5563 !important;
+}
+
+.pos-dashboard [class*="hover:bg-gray-50"]:hover,
+.pos-dashboard [class*="hover:bg-gray-100"]:hover,
+.pos-dashboard [class*="hover:bg-white/10"]:hover,
+.pos-dashboard [class*="hover:bg-black/5"]:hover,
+.pos-dashboard [class*="hover:bg-black/10"]:hover,
+#pos-main [class*="hover:bg-gray-50"]:hover,
+#pos-main [class*="hover:bg-gray-100"]:hover,
+#pos-main [class*="hover:bg-white/10"]:hover,
+#pos-main [class*="hover:bg-black/5"]:hover,
+#pos-main [class*="hover:bg-black/10"]:hover {
+  background-color: #faf8f2 !important;
+}
+
+/* Scrollbars */
+.pos-dashboard ::-webkit-scrollbar-thumb,
+#pos-main ::-webkit-scrollbar-thumb {
+  background: rgba(197, 160, 89, 0.45);
+}
+
+.pos-dashboard ::-webkit-scrollbar-thumb:hover,
+#pos-main ::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-strong);
+}
+
+/* Selection follows the accent too. */
+::selection {
+  background: var(--accent);
+  color: var(--accent-on);
+}
+
+.minimal-input {
+  width: 100%;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.25);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: #FAF7F2;
+  transition: all 0.2s ease;
+}
+.minimal-input::placeholder {
+  color: rgba(184, 181, 174, 0.5);
+}
+
+/* Keep existing POS labels black without overriding text being entered. */
+.pos-dashboard :not(input):not(textarea):not(select):not([contenteditable="true"]) {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+.pos-dashboard input,
+.pos-dashboard textarea,
+.pos-dashboard select,
+.pos-dashboard [contenteditable="true"] {
+  -webkit-text-fill-color: currentColor !important;
+}
+.minimal-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/*
+ * Printing: browsers often strip author colours, so re-assert the accent on
+ * the invoice/receipt roots with `-webkit-print-color-adjust` to keep the
+ * printed output on-brand.
+ */
+@media print {
+  html,
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* Hide number input spin buttons */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+}
+
+/* Animations */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+.animate-swing {
+  animation: swing 2.5s ease-in-out infinite;
+}
+.animate-pop {
+  animation: pop 2s ease-in-out infinite;
+}
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes swing {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+@keyframes pop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
